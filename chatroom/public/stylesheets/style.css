@@ -1,0 +1,31 @@
+body {
+	padding: 50px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+	color: #00B7FF;
+}
+
+/*程序界面宽度800px，水平居中*/
+#content {
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*显示当前聊天室名称的那个区域的CSS规则*/
+#room {
+	background-color: #ddd;
+	margin-bottom: 1em;
+}
+
+/*显示消息*/
+#message {
+	width: 690px;
+	height: 300px;
+	overflow: auto;/*让显示消息的区域在内容填满后可以向下滚动*/
+	background-color: #eee;
+	margin-bottom: 1em;
+	margin-right: 10px;
+}
