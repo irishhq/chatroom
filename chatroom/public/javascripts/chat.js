@@ -25,6 +25,7 @@ Chat.prototype.changeRoom = function(room) {
 //处理聊天命令
 Chat.prototype.processCommand = function(command) {
 	var words = command.split(' ');
+	//此处添加逻辑
 	var command = words[0]
 					.substring(1, words[0].length)
 					.toLowerCase();//从第一个单词开始解析命令
