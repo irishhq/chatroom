@@ -16,6 +16,7 @@ exports.listen = function(server) {
 
 	io.sockets.on('connection', function(socket) {//定义每个用户连接的处理逻辑,io.socket时默认(/)命名空间的别名，server.on()为给定事件注册新的处理程序
 		guestNumber = assignGuestName(socket, guestNumber, nickNames, namesUsed);//在用户连接上来时，赋予其一个访客名
+		console.log('guestNumber' + guestNumber);
 		joinRoom(socket, 'Iris');//在用户连接上来时把他放入聊天室XXX
 
 		//处理用户的消息，更名，以及聊天室的创建和变更
@@ -24,10 +25,12 @@ exports.listen = function(server) {
 		handleRoomJoining(socket);
 
 		socket.on('rooms', function(){//用户发出请求时，向其提供已经被占用的聊天室的列表
-			socket.emit('rooms', io.sockets.adapter.rooms);
+			socket.emit('rooms', io.sockets.manager.rooms);
+			console.log('io.sockets.manager.rooms = ');
+			console.log(io.sockets.manager.rooms);
 		});
 
-		handleClientDisconnection(socket, nickNames, namesUsed);//定义用户断开连接后的清除逻辑
+		// handleClientDisconnection(socket, nickNames, namesUsed);//定义用户断开连接后的清除逻辑
 	});
 }
 /**
@@ -43,7 +46,10 @@ function assignGuestName(socket, guestNumber, nickNames, namesUsed){
 		success: true,
 		name: name
 	});
+	console.log('GuestName = ' + nickNames[socket.id]);
+
 	namesUsed.push(name); //存放已经被占用的名称
+	console.log('namesUsed = ' + namesUsed);
 	return guestNumber + 1; //增加用来生成名称的计数器
 }
 
@@ -52,6 +58,7 @@ function assignGuestName(socket, guestNumber, nickNames, namesUsed){
  * @description 与进入聊天室相关的逻辑，将用户加入socket.io房间，只要调用socket对象上的join方法
  */
 function joinRoom(socket, room){
+	console.log(room);
 	socket.join(room);//让用户进入房间
 	currentRoom[socket.id] = room;//记录当前的房间
 	socket.emit('joinResult', {room: room});//让用户知道他们进入了新的房间
