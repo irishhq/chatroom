@@ -7,28 +7,27 @@
 </head>
 <body>
 	<div id="content">
-		<div id="room"><!-- 显示当前聊天室名称 -->
-			<div id="room-list"></div><!-- 显示当前可用聊天室列表 -->
-			<div id="message"></div><!-- 显示聊天信息 -->
-			<form id="send-form">
-				<input type="" name="" id="send-message" /><!-- 用户用来输入聊天信息命令和消息的表单输入元素 -->
-				<input type="submit" name="" id="send-button" value="发送"/>
+		<div id="room"></div><!-- 显示当前聊天室名称 -->
+		<div id="room-list"></div><!-- 显示当前可用聊天室列表 -->
+		<div id="message"></div><!-- 显示聊天信息 -->
+		<form id="send-form">
+			<input type="" name="" id="send-message" /><!-- 用户用来输入聊天信息命令和消息的表单输入元素 -->
+			<input type="submit" name="" id="send-button" value="发送"/>
 
-				<div id="help">
-					Chat commands:
-					<ul>
-						<li>改变昵称: <code>/nick [username]</code></li>
-						<li>加入/创建 聊天室： <code>/join [room name]</code></li>
-					</ul>
-				</div>
-			</form>
-		</div>
+			<div id="help">
+				Chat commands:
+				<ul>
+					<li>改变昵称: <code>/nick [username]</code></li>
+					<li>加入/创建 聊天室： <code>/join [room name]</code></li>
+				</ul>
+			</div>
+		</form>
 	</div>
 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
   crossorigin="anonymous"></script>
-  	<script type="text/javascript" src="/javascript/chat.js"></script>
-  	<script type="text/javascript" src="/javascript/chat_ui.js"></script>
+  	<script type="text/javascript" src="/javascripts/chat.js"></script>
+  	<script type="text/javascript" src="/javascripts/chat_ui.js"></script>
 </body>
 </html>
