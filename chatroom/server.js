@@ -25,7 +25,7 @@ description: 提供文件数据服务。先写出正确的http头，然后发送
 function sendFile(response, filePath, fileContents) {
 	response.writeHead(
 		200,
-		{"Content-Type": mime.getType(path.basename(filePath))}//path.basename()返回文件路径最后一部分，不含分隔符
+		{"Content-Type": mime.lookup(path.basename(filePath))}//path.basename()返回文件路径最后一部分，不含分隔符
 	);
 	response.end(fileContents);
 }
@@ -44,6 +44,7 @@ function serverStatic(response, cache, absPath) {
 				fs.readFile(absPath, function(err, data) {//从硬盘中读取文件
 					if (err) {
 						send404(response);
+						console.log(err);
 					} else {
 						cache[absPath] = data;
 						sendFile(response, absPath, data);//从硬盘中读取文件并返回
@@ -51,6 +52,10 @@ function serverStatic(response, cache, absPath) {
 				});
 			} else {
 				send404(response);//发送http404响应
+				/*console.log('-----------------------------');
+				console.log('no stats info');
+				console.log('stats = ' + stats);
+				console.log('absPath = ' + absPath);*/
 			}
 		});
 	}
@@ -63,12 +68,13 @@ var server = http.createServer(function(request, response) {//创建http服务�
 	var filePath = false;
 
 	if (request.url == '/') {
-		filePath = 'public.index.html';//确定默认返回的html文件
+		filePath = 'public/index.html';//确定默认返回的html文件
 	} else {
 		filePath = 'public' + request.url;//将url路径转为文件的相对路径
 	}
 
 	var absPath = './' + filePath;
+	// console.log('创建服务器时，absPath = ' + absPath + '  request.url = ' + request.url);
 	serverStatic(response, cache, absPath);//返回静态文件
 });
 
@@ -82,5 +88,5 @@ server.listen(3000, function() {
 /*
 4. 设置Socket.IO服务器
 */ 
-var chatServer = require('./lib/chat_server');//加载定制的node模块，用于处理基于socket.io的服务端聊天功能。
+var chatServer = require('./lib/chat_server.js');//加载定制的node模块，用于处理基于socket.io的服务端聊天功能。
 chatServer.listen(server);//启动socket.io服务器，为其提供一个已经定义好的http服务器，与http共享一个tcp/ip端口
